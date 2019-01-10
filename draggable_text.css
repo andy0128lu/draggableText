@@ -36,6 +36,10 @@ select {
     margin: auto;
 }
 
+.property {
+    text-align: center;
+}
+
 .white {
     color: white;
     font-size: 100px;

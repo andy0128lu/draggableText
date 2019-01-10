@@ -4,12 +4,32 @@
 	<head>
 		<title>Draggable text on the canvas</title>
 		<link rel="stylesheet" href="./draggable_text.css">
+		<link rel="stylesheet" href="./fontselect.css">
+
+		<!--
+		<script>
+				$(function(){
+				  $('#googleFont').fontselect().change(function(){
+				  
+					// replace + signs with spaces for css
+					var font = $(this).val().replace(/\+/g, ' ');
+					
+					// split font into family and weight
+					font = font.split(':');
+					
+					// set family on paragraphs 
+					$('p').css('font-family', font[0]);
+				  });
+				});
+		</script>
+		-->
 	</head>
 
 
 	<body>
 		<h3>Please type the text you want to show on the canvas</h3>
 		<input id="textField" type="text">
+
 		<div class="property">
 			<select id="color">
 				<option value="black" class="white">Black</option>
@@ -21,18 +41,14 @@
 				<option value="indigo" class="white">Indigo</option>
 				<option value="purple" class="white">Purple</option>
 			</select>
-			<select id="font">
-				<option value="serif">serif</option>
-				<option value="sansserif">sans-serif</option>
-				<option value="monospace">monospace</option>
-				<option value="cursive">cursive</option>
-				<option value="fantasy">fantasy</option>
-			</select>
+			<input id="googleFont" type="text">
 		</div>
 		<canvas id="canvas" width=600 height=600></canvas>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="./draggable_text.js"></script>
+		<script src="./jquery.fontselect.js"></script>
+
 	</body>
 
 </html>

@@ -24,10 +24,15 @@ var color = document.getElementById("color");
 var jColor = $("#color");
 var selectedColor = "black";
 
-// variables for color selector
+// variables for font selector
 var font = document.getElementById("font");
 var jFont = $("#font");
 var selectedFont;
+
+// variables for google font selector
+var googleFont = document.getElementById("googleFont");
+var jGoogleFont = $("#googleFont");
+
 
 // listeners
 canvas.addEventListener("mousedown", onMouseClick);
@@ -36,10 +41,12 @@ canvas.addEventListener("mouseup", onMouseRelease);
 
 color.addEventListener("change", changeSelectorColor);
 
-font.addEventListener("change", changeSelectorFont);
+//font.addEventListener("change", changeSelectorFont);
+//googleFont.addEventListener("change", changeSelectorGoogleFont);
 
 text.addEventListener("change", changeSelectorColor);
-text.addEventListener("change", changeSelectorFont);
+//text.addEventListener("change", changeSelectorFont);
+//text.addEventListener("change", changeSelectorGoogleFont);
 
 
 
@@ -72,10 +79,9 @@ function checkMouseOnText(mouseX, mouseY){
 // methods for mouse events
 function onMouseClick(e){
 
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
-    startX = parseInt(e.clientX - offsetX);
-    startY = parseInt(e.clientY - offsetY);
+    mouseX = startX = parseInt(e.clientX - offsetX);
+    mouseY = startY = parseInt(e.clientY - offsetY);
+
 
     idx_text = checkMouseOnText(mouseX, mouseY)
 
@@ -87,7 +93,7 @@ function onMouseClick(e){
             y: mouseY
         };
 
-        canvas2D.font = "30px verdana";
+        //canvas2D.font = "30px verdana";
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = 30;
         textObj.color = selectedColor;
@@ -134,13 +140,12 @@ function drawText(){
     text_list.forEach( (text) => {
         canvas2D.fillStyle = text.color;
         canvas2D.font = "40px " + text.font;
+        canvas2D.fillText(text.text, text.x, text.y);
         /*
+        //for test the area of the text object - Issue#1
+        canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
         canvas2D.fillText(text.text, text.x, text.y);
         */
-       //for test the area of the text object
-       canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
-       canvas2D.fillText(text.text, text.x, text.y);
-
 
     })
 }
@@ -158,5 +163,43 @@ function changeSelectorFont() {
     selectedFont = $("#font option:selected").val();
     jText.css("font-family", selectedFont);
 }
+
+// methods for google font selection
+$(document).ready ( () => {
+    //jGoogleFont.fontselect();
+    //changeSelectorGoogleFont();
+})
+/*
+function changeSelectorGoogleFont(){
+    // replace + signs with spaces for css
+    var font = jGoogleFont.val().replace(/\+/g, ' ');
+    console.log(jGoogleFont.val().replace(/\+/g, ' '))
+
+    // split font into family and weight
+    font = font.split(':');
+    
+    // set family on paragraphs 
+    jText.css("font-family", font[0]);
+}
+*/
+$(function(){
+    $('#googleFont').fontselect().change(function(){
+    
+      // replace + signs with spaces for css
+      var font = $(this).val().replace(/\+/g, ' ');
+      
+      // split font into family and weight
+      font = font.split(':');
+
+      selectedFont =font[0];
+      console.log(font);
+      
+      // set family on paragraphs 
+      $('#textfield').css('font-family', font[0]);
+    });
+  });
+
+
+
 
 
