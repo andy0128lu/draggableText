@@ -14,6 +14,8 @@ var mouseX = 0;
 var mouseY = 0;
 
 // variables for text objects
+var text = document.getElementById("textField");
+var jText = $("#textField");
 var text_list = [];
 var idx_text = -1;
 
@@ -22,6 +24,10 @@ var color = document.getElementById("color");
 var jColor = $("#color");
 var selectedColor = "black";
 
+// variables for color selector
+var font = document.getElementById("font");
+var jFont = $("#font");
+var selectedFont;
 
 // listeners
 canvas.addEventListener("mousedown", onMouseClick);
@@ -29,6 +35,13 @@ canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mouseup", onMouseRelease);
 
 color.addEventListener("change", changeSelectorColor);
+
+font.addEventListener("change", changeSelectorFont);
+
+text.addEventListener("change", changeSelectorColor);
+text.addEventListener("change", changeSelectorFont);
+
+
 
 // methods for checking status
 function checkMouseOnText(mouseX, mouseY){
@@ -78,6 +91,7 @@ function onMouseClick(e){
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = 30;
         textObj.color = selectedColor;
+        textObj.font = selectedFont;
 
         text_list.push(textObj);
 
@@ -119,15 +133,30 @@ function drawText(){
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
     text_list.forEach( (text) => {
         canvas2D.fillStyle = text.color;
+        canvas2D.font = "40px " + text.font;
+        /*
         canvas2D.fillText(text.text, text.x, text.y);
+        */
+       //for test the area of the text object
+       canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
+       canvas2D.fillText(text.text, text.x, text.y);
+
+
     })
 }
 
 // methods for color selection
 function changeSelectorColor() {
-    selectedColor = $("option:selected", this).val();
+    selectedColor = $("#color option:selected").val();
     jColor.css("background-color", selectedColor);
+    jText.css("color", selectedColor);
+
 }
 
+// methods for font selection
+function changeSelectorFont() {
+    selectedFont = $("#font option:selected").val();
+    jText.css("font-family", selectedFont);
+}
 
 

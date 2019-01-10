@@ -1,0 +1,5 @@
+Open issues:
+#1  Font offset
+	Different fonts have their own origins
+
+Closed issues:

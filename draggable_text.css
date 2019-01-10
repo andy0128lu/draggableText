@@ -6,24 +6,64 @@ body {
     border:1px solid red;
     background-color: white;
     margin: auto;
+    display: block;
+
 }
 
 input {
     font-size: 30px;
-}
-
-.center {
-    text-align: center;
+    width: 600px;
+    display: block;
     margin: auto;
 }
-/*
-select option.color {
-    color: green;
-    background-color: green;
-  }
-  
+
+h3 {
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+}
+
+select {
+    display: inline-block;
+    margin: auto;
+    height: 30px;
+    padding: 5px;
+
+}
+
+#font {
+    display: inline-block;
+    margin: auto;
+}
+
+.white {
+    color: white;
+    font-size: 100px;
+}
+/*  
 .color:nth-of-type(2) {
     color: red;
     background: red;
 }
 */
+
+/* font families */
+.serif {
+    font-family: Times, Times New Roman, Georgia, serif;
+}
+
+.sansserif {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.monospace {
+    font-family: Lucida Console, Courier, monospace;
+}
+
+.cursive {
+    font-family: cursive;
+}
+
+.fantasy {
+    font-family: fantasy;
+}
