@@ -36,7 +36,6 @@ var jGoogleFont = $("#googleFont");
 
 // Execution on ready
 $(document).ready ( () => {
-    //jGoogleFont.fontselect();
     changeSelectorGoogleFont();
 })
 
@@ -44,16 +43,9 @@ $(document).ready ( () => {
 canvas.addEventListener("mousedown", onMouseClick);
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mouseup", onMouseRelease);
-
 color.addEventListener("change", changeSelectorColor);
-
-//font.addEventListener("change", changeSelectorFont);
 googleFont.addEventListener("change", changeSelectorGoogleFont);
-
 text.addEventListener("change", changeSelectorColor);
-//text.addEventListener("change", changeSelectorFont);
-//text.addEventListener("change", changeSelectorGoogleFont);
-
 
 
 // methods for checking status
@@ -65,6 +57,7 @@ function checkMouseOnText(mouseX, mouseY){
         return idx;
     }
     else {
+        //checking if the mouse in on any text objects
         for(i=0; i<text_list.length; i++){
             var left = text_list[i].x;
             var top = text_list[i].y - text_list[i].height;
@@ -87,12 +80,8 @@ function onMouseClick(e){
 
     mouseX = startX = parseInt(e.clientX - offsetX);
     mouseY = startY = parseInt(e.clientY - offsetY)+38;
-    //mouseX = startX = parseInt(e.clientX- canvas.clientLeft);
-    //mouseY = startY = parseInt(e.clientY- canvas.clientTop);
-
 
     idx_text = checkMouseOnText(mouseX, mouseY)
-
 
     if (idx_text < 0){
         var textObj = {
@@ -102,10 +91,7 @@ function onMouseClick(e){
         };
 
         canvas2D.font = "30px "+ selectedFont;
-        console.log("client: ", e.clientX, e.clientY);
-        console.log("page: ", e.pageX, e.pageY);
-        console.log("mouse: ", mouseX, mouseY)
-        console.log("offset : ", offsetX, offsetY);
+
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = canvas2D.measureText('M').width
         textObj.color = selectedColor;
@@ -114,9 +100,7 @@ function onMouseClick(e){
         text_list.push(textObj);
 
         drawText();
-    
     }
-    
 }
 
 function onMouseMove(e){
@@ -150,16 +134,11 @@ function onMouseRelease(e){
 function drawText(){
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
     text_list.forEach( (text) => {
+        
         canvas2D.fillStyle = text.color;
         canvas2D.font = "30px " + text.font;
-        //canvas2D.fillText(text.text, text.x, text.y);
-        
-        //for test the area of the text object - Issue#1
-        //canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
-        //console.log(text.x, text.y);
         canvas2D.fillText(text.text, text.x, text.y);
-        
-
+    
     })
 }
 
