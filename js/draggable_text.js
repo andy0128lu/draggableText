@@ -3,7 +3,8 @@ var canvas = document.getElementById("canvas");
 var canvas2D = canvas.getContext("2d");
 
 var jCanvas = $("#canvas");
-var canvasOffset = jCanvas.offset();
+//var canvasOffset = jCanvas.offset();
+var canvasOffset = canvas.getBoundingClientRect();
 var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
 
@@ -33,6 +34,11 @@ var selectedFont;
 var googleFont = document.getElementById("googleFont");
 var jGoogleFont = $("#googleFont");
 
+// Execution on ready
+$(document).ready ( () => {
+    //jGoogleFont.fontselect();
+    changeSelectorGoogleFont();
+})
 
 // listeners
 canvas.addEventListener("mousedown", onMouseClick);
@@ -42,7 +48,7 @@ canvas.addEventListener("mouseup", onMouseRelease);
 color.addEventListener("change", changeSelectorColor);
 
 //font.addEventListener("change", changeSelectorFont);
-//googleFont.addEventListener("change", changeSelectorGoogleFont);
+googleFont.addEventListener("change", changeSelectorGoogleFont);
 
 text.addEventListener("change", changeSelectorColor);
 //text.addEventListener("change", changeSelectorFont);
@@ -80,7 +86,9 @@ function checkMouseOnText(mouseX, mouseY){
 function onMouseClick(e){
 
     mouseX = startX = parseInt(e.clientX - offsetX);
-    mouseY = startY = parseInt(e.clientY - offsetY);
+    mouseY = startY = parseInt(e.clientY - offsetY)+38;
+    //mouseX = startX = parseInt(e.clientX- canvas.clientLeft);
+    //mouseY = startY = parseInt(e.clientY- canvas.clientTop);
 
 
     idx_text = checkMouseOnText(mouseX, mouseY)
@@ -93,9 +101,13 @@ function onMouseClick(e){
             y: mouseY
         };
 
-        //canvas2D.font = "30px verdana";
+        canvas2D.font = "30px "+ selectedFont;
+        console.log("client: ", e.clientX, e.clientY);
+        console.log("page: ", e.pageX, e.pageY);
+        console.log("mouse: ", mouseX, mouseY)
+        console.log("offset : ", offsetX, offsetY);
         textObj.width = canvas2D.measureText(textObj.text).width;
-        textObj.height = 30;
+        textObj.height = canvas2D.measureText('M').width
         textObj.color = selectedColor;
         textObj.font = selectedFont;
 
@@ -114,7 +126,7 @@ function onMouseMove(e){
     else {
 
         mouseX = parseInt(e.clientX - offsetX);
-        mouseY = parseInt(e.clientY - offsetY);
+        mouseY = parseInt(e.clientY - offsetY)+38;
 
         var dx = parseInt(mouseX - startX);
         var dy = parseInt(mouseY - startY);
@@ -139,13 +151,14 @@ function drawText(){
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
     text_list.forEach( (text) => {
         canvas2D.fillStyle = text.color;
-        canvas2D.font = "40px " + text.font;
-        canvas2D.fillText(text.text, text.x, text.y);
-        /*
+        canvas2D.font = "30px " + text.font;
+        //canvas2D.fillText(text.text, text.x, text.y);
+        
         //for test the area of the text object - Issue#1
-        canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
+        //canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
+        //console.log(text.x, text.y);
         canvas2D.fillText(text.text, text.x, text.y);
-        */
+        
 
     })
 }
@@ -165,24 +178,7 @@ function changeSelectorFont() {
 }
 
 // methods for google font selection
-$(document).ready ( () => {
-    //jGoogleFont.fontselect();
-    //changeSelectorGoogleFont();
-})
-/*
 function changeSelectorGoogleFont(){
-    // replace + signs with spaces for css
-    var font = jGoogleFont.val().replace(/\+/g, ' ');
-    console.log(jGoogleFont.val().replace(/\+/g, ' '))
-
-    // split font into family and weight
-    font = font.split(':');
-    
-    // set family on paragraphs 
-    jText.css("font-family", font[0]);
-}
-*/
-$(function(){
     jGoogleFont.fontselect().change(function(){
     
       // replace + signs with spaces for css
@@ -192,12 +188,12 @@ $(function(){
       font = font.split(':');
 
       selectedFont =font[0];
-      console.log(font);
+      //console.log(font);
       
       // set family on paragraphs 
       jText.css('font-family', font[0]);
     });
-  });
+}
 
 
 
