@@ -8,7 +8,7 @@ The latest code of the first version is on the master branch, which outcome is s
 **Figure 1**. Screenshot of the demo of the text dragging function with generic font families
 
 The latest code of the second version is on the googleFont branch, which outcome is shown as figure 2.
-![alt text](https://github.com/andy0128lu/draggableText/blob/googleFont/screenshotsGoogle%20font%20selecting%20function%20completed.png)
-**Figure 2**. Screenshot of the demo of the text dragging function with generic font families
+![alt text](https://github.com/andy0128lu/draggableText/blob/googleFont/screenshots/Google%20font%20selecting%20function%20completed.png)
+**Figure 2**. Screenshot of the demo of the text dragging function with Google font families
 
 
