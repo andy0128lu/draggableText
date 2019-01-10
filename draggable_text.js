@@ -17,17 +17,23 @@ var mouseY = 0;
 var text_list = [];
 var idx_text = -1;
 
+// variables for color selector
+var color = document.getElementById("color");
+var jColor = $("#color");
+var selectedColor = "black";
+
+
 // listeners
 canvas.addEventListener("mousedown", onMouseClick);
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mouseup", onMouseRelease);
 
+color.addEventListener("change", changeSelectorColor);
 
 // methods for checking status
 function checkMouseOnText(mouseX, mouseY){
     var idx = -1
 
-    console.log(text_list)
     if (text_list.length == 0){
         idx = -1
         return idx;
@@ -71,6 +77,7 @@ function onMouseClick(e){
         canvas2D.font = "30px verdana";
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = 30;
+        textObj.color = selectedColor;
 
         text_list.push(textObj);
 
@@ -111,11 +118,16 @@ function onMouseRelease(e){
 function drawText(){
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
     text_list.forEach( (text) => {
+        canvas2D.fillStyle = text.color;
         canvas2D.fillText(text.text, text.x, text.y);
     })
 }
 
-
+// methods for color selection
+function changeSelectorColor() {
+    selectedColor = $("option:selected", this).val();
+    jColor.css("background-color", selectedColor);
+}
 
 
 

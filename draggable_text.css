@@ -16,3 +16,16 @@ input {
     text-align: center;
     margin: auto;
 }
+/*
+select option.color {
+    color: green;
+    background-color: green;
+    margin: 40px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+.color:nth-of-type(2) {
+    color: red;
+    background: red;
+}
+*/
