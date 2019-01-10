@@ -183,7 +183,7 @@ function changeSelectorGoogleFont(){
 }
 */
 $(function(){
-    $('#googleFont').fontselect().change(function(){
+    jGoogleFont.fontselect().change(function(){
     
       // replace + signs with spaces for css
       var font = $(this).val().replace(/\+/g, ' ');
@@ -195,7 +195,7 @@ $(function(){
       console.log(font);
       
       // set family on paragraphs 
-      $('#textfield').css('font-family', font[0]);
+      jText.css('font-family', font[0]);
     });
   });
 
