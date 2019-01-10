@@ -3,7 +3,7 @@ body {
 }
 
 #canvas {
-    border:1px solid red;
+    border:1px solid grey;
     background-color: white;
     margin: auto;
     display: block;
@@ -24,6 +24,7 @@ h3 {
 }
 
 select {
+    color: grey;
     display: inline-block;
     margin: auto;
     height: 30px;
@@ -31,21 +32,24 @@ select {
 
 }
 
+.rounded-top-corner {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.rounded-bottom-corner {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
 #font {
     display: inline-block;
     margin: auto;
 }
 
-.white {
-    color: white;
-    font-size: 100px;
+.property {
+    text-align: center;
 }
-/*  
-.color:nth-of-type(2) {
-    color: red;
-    background: red;
-}
-*/
 
 /* font families */
 .serif {

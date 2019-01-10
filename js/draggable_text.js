@@ -52,6 +52,7 @@ function checkMouseOnText(mouseX, mouseY){
         return idx;
     }
     else {
+        //check if the mouse is on any text objects
         for(i=0; i<text_list.length; i++){
             var left = text_list[i].x;
             var top = text_list[i].y - text_list[i].height;
@@ -72,13 +73,10 @@ function checkMouseOnText(mouseX, mouseY){
 // methods for mouse events
 function onMouseClick(e){
 
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
-    startX = parseInt(e.clientX - offsetX);
-    startY = parseInt(e.clientY - offsetY);
+    mouseX = startX = parseInt(e.clientX - offsetX);
+    mouseY = startY = parseInt(e.clientY - offsetY)-5;
 
     idx_text = checkMouseOnText(mouseX, mouseY)
-
 
     if (idx_text < 0){
         var textObj = {
@@ -108,7 +106,7 @@ function onMouseMove(e){
     else {
 
         mouseX = parseInt(e.clientX - offsetX);
-        mouseY = parseInt(e.clientY - offsetY);
+        mouseY = parseInt(e.clientY - offsetY)-5;
 
         var dx = parseInt(mouseX - startX);
         var dy = parseInt(mouseY - startY);
@@ -134,13 +132,7 @@ function drawText(){
     text_list.forEach( (text) => {
         canvas2D.fillStyle = text.color;
         canvas2D.font = "40px " + text.font;
-        /*
         canvas2D.fillText(text.text, text.x, text.y);
-        */
-       //for test the area of the text object
-       canvas2D.strokeRect(text.x, text.y-text.height, text.width, text.height );
-       canvas2D.fillText(text.text, text.x, text.y);
-
 
     })
 }
