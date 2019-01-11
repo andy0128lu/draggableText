@@ -24,12 +24,12 @@ var color = document.getElementById("color");
 var jColor = $("#color");
 var selectedColor = "black";
 
-// variables for color selector
+// variables for font selector
 var font = document.getElementById("font");
 var jFont = $("#font");
 var selectedFont;
 
-// listeners
+// event listeners
 canvas.addEventListener("mousedown", onMouseClick);
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mouseup", onMouseRelease);
@@ -44,6 +44,7 @@ text.addEventListener("change", changeSelectorFont);
 
 
 // methods for checking status
+// checkMouseOnText(): return the index of the text object if anyone is found, or return -1
 function checkMouseOnText(mouseX, mouseY){
     var idx = -1
 
@@ -66,7 +67,6 @@ function checkMouseOnText(mouseX, mouseY){
             }
         }
     }
-
     return idx;
 }
 
@@ -78,21 +78,26 @@ function onMouseClick(e){
 
     idx_text = checkMouseOnText(mouseX, mouseY)
 
+    //no existing text objects detected on the position of mouse clicking,
+    //and then create new one
     if (idx_text < 0){
         var textObj = {
             text: $("#textField").val(),
             x: mouseX,
             y: mouseY
         };
-
+        
+        //define the properties of the text object
         canvas2D.font = "30px verdana";
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = 30;
         textObj.color = selectedColor;
         textObj.font = selectedFont;
 
+        //push the object into the list of text objects
         text_list.push(textObj);
 
+        //re-draw the canvas
         drawText();
     
     }
@@ -104,7 +109,7 @@ function onMouseMove(e){
         return;
     }
     else {
-
+        //keep the text showing on the canvas while drag the text around
         mouseX = parseInt(e.clientX - offsetX);
         mouseY = parseInt(e.clientY - offsetY)-5;
 
@@ -123,12 +128,16 @@ function onMouseMove(e){
 }
 
 function onMouseRelease(e){
+    //reset the index of the selected text object to none
     idx_text = -1;
 }
 
 // methods for the canvas
 function drawText(){
+    //clear the canvas
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
+
+    //re-draw all text objects
     text_list.forEach( (text) => {
         canvas2D.fillStyle = text.color;
         canvas2D.font = "40px " + text.font;
@@ -139,15 +148,23 @@ function drawText(){
 
 // methods for color selection
 function changeSelectorColor() {
+    //get the value of color that the user chose
     selectedColor = $("#color option:selected").val();
+
+    //reflect the color change on the color selector
     jColor.css("background-color", selectedColor);
+
+    //reflect the color change on the text field
     jText.css("color", selectedColor);
 
 }
 
 // methods for font selection
 function changeSelectorFont() {
+    //get the value of color that the user chose
     selectedFont = $("#font option:selected").val();
+
+    //reflect the color change on the text field
     jText.css("font-family", selectedFont);
 }
 
