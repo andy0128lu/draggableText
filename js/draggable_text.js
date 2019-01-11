@@ -39,16 +39,20 @@ $(document).ready ( () => {
     changeSelectorGoogleFont();
 })
 
-// listeners
+// event listeners
 canvas.addEventListener("mousedown", onMouseClick);
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mouseup", onMouseRelease);
+
 color.addEventListener("change", changeSelectorColor);
+
 googleFont.addEventListener("change", changeSelectorGoogleFont);
+
 text.addEventListener("change", changeSelectorColor);
 
 
 // methods for checking status
+// checkMouseOnText(): return the index of the text object if anyone is found, or return -1
 function checkMouseOnText(mouseX, mouseY){
     var idx = -1
 
@@ -82,7 +86,9 @@ function onMouseClick(e){
     mouseY = startY = parseInt(e.clientY - offsetY)+38;
 
     idx_text = checkMouseOnText(mouseX, mouseY)
-
+    
+    //no existing text objects detected on the position of mouse clicking,
+    //and then create new one
     if (idx_text < 0){
         var textObj = {
             text: $("#textField").val(),
@@ -90,15 +96,17 @@ function onMouseClick(e){
             y: mouseY
         };
 
+        //define the properties of the text object
         canvas2D.font = "30px "+ selectedFont;
-
         textObj.width = canvas2D.measureText(textObj.text).width;
         textObj.height = canvas2D.measureText('M').width
         textObj.color = selectedColor;
         textObj.font = selectedFont;
-
+        
+        //push the object into the list of text objects
         text_list.push(textObj);
 
+        //re-draw the canvas
         drawText();
     }
 }
@@ -108,7 +116,7 @@ function onMouseMove(e){
         return;
     }
     else {
-
+        //keep the text showing on the canvas while drag the text around
         mouseX = parseInt(e.clientX - offsetX);
         mouseY = parseInt(e.clientY - offsetY)+38;
 
@@ -127,14 +135,17 @@ function onMouseMove(e){
 }
 
 function onMouseRelease(e){
+    //reset the index of the selected text object to none
     idx_text = -1;
 }
 
 // methods for the canvas
 function drawText(){
+    //clear the canvas
     canvas2D.clearRect(0, 0, canvas.width, canvas.height);
+
+    //re-draw all text objects
     text_list.forEach( (text) => {
-        
         canvas2D.fillStyle = text.color;
         canvas2D.font = "30px " + text.font;
         canvas2D.fillText(text.text, text.x, text.y);
@@ -144,15 +155,23 @@ function drawText(){
 
 // methods for color selection
 function changeSelectorColor() {
+    //get the value of color that the user chose
     selectedColor = $("#color option:selected").val();
+
+    //reflect the color change on the color selector
     jColor.css("background-color", selectedColor);
+
+    //reflect the color change on the text field
     jText.css("color", selectedColor);
 
 }
 
 // methods for font selection
 function changeSelectorFont() {
+    //get the value of color that the user chose
     selectedFont = $("#font option:selected").val();
+
+    //reflect the color change on the text field
     jText.css("font-family", selectedFont);
 }
 
@@ -160,17 +179,16 @@ function changeSelectorFont() {
 function changeSelectorGoogleFont(){
     jGoogleFont.fontselect().change(function(){
     
-      // replace + signs with spaces for css
-      var font = $(this).val().replace(/\+/g, ' ');
-      
-      // split font into family and weight
-      font = font.split(':');
+        // replace + signs with spaces for css
+        var font = $(this).val().replace(/\+/g, ' ');
+        
+        // split font into family and weight
+        font = font.split(':');
 
-      selectedFont =font[0];
-      //console.log(font);
+        selectedFont =font[0];
       
-      // set family on paragraphs 
-      jText.css('font-family', font[0]);
+        //reflect the color change on the text field
+        jText.css('font-family', font[0]);
     });
 }
 
