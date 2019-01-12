@@ -29,6 +29,9 @@ var font = document.getElementById("font");
 var jFont = $("#font");
 var selectedFont;
 
+// variables for div
+var parent = document.getElementById("parent");
+
 // event listeners
 canvas.addEventListener("mousedown", onMouseClick);
 canvas.addEventListener("mousemove", onMouseMove);
@@ -38,8 +41,13 @@ color.addEventListener("change", changeSelectorColor);
 
 font.addEventListener("change", changeSelectorFont);
 
+document.addEventListener('keydown', randomizeText);
+
 text.addEventListener("change", changeSelectorColor);
 text.addEventListener("change", changeSelectorFont);
+//text.addEventListener("focus", stopPropagation);
+text.addEventListener('keydown', stopPropagation);
+
 
 
 
@@ -168,4 +176,23 @@ function changeSelectorFont() {
     jText.css("font-family", selectedFont);
 }
 
+//method for randomize text objects
+function randomizeText(e) {
+    
+    //when the key "r" is pressed, randomize the positions of all text objects
+    if( e.keyCode == 82 ){
+        text_list.forEach( (text) =>{
+            //pick a random pixel from the canvas
+            text.x = Math.floor(Math.random() * 600);
+            text.y = Math.floor(Math.random() * 600);
+        })
+    }
 
+    drawText();
+}
+
+// stop trigging event
+function stopPropagation(e) {
+    e.stopPropagation();
+
+}
